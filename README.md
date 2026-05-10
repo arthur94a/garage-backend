@@ -86,7 +86,7 @@ Documentação automática:
 
 ## Observações
 
-- O backend está configurado para aceitar requisições do frontend em http://localhost:5173.
+- O backend está configurado para aceitar requisições do frontend em http://localhost:8080.
 - Certifique-se de manter a pasta database acessível para persistência local dos dados.
 
 
