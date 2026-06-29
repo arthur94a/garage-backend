@@ -1,5 +1,6 @@
 fastapi[all]
 sqlmodel
+psycopg[binary]
 pydantic[email]
 tzdata
 passlib[bcrypt]==1.7.4

@@ -1,0 +1,15 @@
+services:
+  api:
+    build: .
+    container_name: garage_api
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-}
+      RDS_HOSTNAME: ${RDS_HOSTNAME:-}
+      RDS_PORT: ${RDS_PORT:-5432}
+      RDS_DB_NAME: ${RDS_DB_NAME:-garage}
+      RDS_USERNAME: ${RDS_USERNAME:-garage}
+      RDS_PASSWORD: ${RDS_PASSWORD:-garage}
+      DB_SSLMODE: ${DB_SSLMODE:-require}
+    ports:
+      - "8000:8000"
+    restart: unless-stopped

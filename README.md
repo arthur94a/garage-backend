@@ -19,6 +19,7 @@ Antes de iniciar, instale:
 - Python 3.11 ou superior
 - pip
 - virtualenv (opcional, mas recomendado)
+- Instância PostgreSQL no AWS RDS
 - Docker (opcional, para execução em container)
 
 ## Instalação e configuração local
@@ -45,6 +46,20 @@ Antes de iniciar, instale:
 
 	pip install -r requirements.txt
 
+5. Configure a conexão com o AWS RDS:
+
+	Linux/Mac:
+
+	export DATABASE_URL="postgresql+psycopg://usuario:senha@seu-endpoint-rds.amazonaws.com:5432/garage?sslmode=require"
+
+	Windows (PowerShell):
+
+	$env:DATABASE_URL="postgresql+psycopg://usuario:senha@seu-endpoint-rds.amazonaws.com:5432/garage?sslmode=require"
+
+	Alternativa com variáveis separadas (sem URL completa):
+
+	RDS_HOSTNAME, RDS_PORT, RDS_DB_NAME, RDS_USERNAME, RDS_PASSWORD, DB_SSLMODE
+
 ## Executando a aplicação
 
 Com o ambiente virtual ativo, execute:
@@ -62,19 +77,15 @@ Documentação automática:
 
 ## Executando com Docker
 
-1. Build da imagem:
+1. Crie o arquivo de ambiente:
 
-	docker build -t mvp_api_principal .
+	cp .env.example .env
 
-2. Suba o container na porta 8000:
+2. Suba API + PostgreSQL:
 
-	Linux/Mac:
+	docker compose up --build
 
-	docker run -p 8000:8000 -v "$(pwd)/database:/app/database" mvp_api_principal
-
-	Windows (PowerShell):
-
-	docker run -p 8000:8000 -v "${PWD}/database:/app/database" mvp_api_principal
+	Observação: com esta configuração, o `docker-compose` sobe apenas a API e usa o banco no AWS RDS.
 
 ## Estrutura resumida
 
@@ -86,8 +97,8 @@ Documentação automática:
 
 ## Observações
 
-- O backend está configurado para aceitar requisições do frontend em http://localhost:8080.
-- Certifique-se de manter a pasta database acessível para persistência local dos dados.
+- O backend está configurado para aceitar requisições do frontend em http://localhost:5173.
+- Para RDS, libere acesso ao Security Group da instância para o IP/rede onde a API executa.
 
 
 ## Fluxograma
